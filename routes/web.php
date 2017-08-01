@@ -11,12 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-	$tasks = [
-		"Order pizza",
-		"Order hotdogs",
-		"Build a hotdog or pizza app"
-	];
+Route::get('/tasks', function () {
+	$tasks = DB::table('tasks')->get();
+	// gets all records
+    return view('tasks.index', compact('tasks'));
+});
 
-    return view('welcome', compact('tasks'));
+// {} is the wildcard
+Route::get('/tasks/{task}', function ($id) {
+	$task = DB::table('tasks')->find($id);
+	// dd($task);
+
+    return view('tasks.show', compact('task'));
 });
